@@ -1,0 +1,90 @@
+﻿@page "/canilecomp"
+@inject BaseDati db
+<h3>Canile di San Giovanni Valdarno</h3>
+
+@if (nuovoCane == null)
+{
+    <button class="btn btn-primary" @onclick="(e => Aggiungi())">Aggiungi cane</button>
+    <table class="table table-hover">
+        <tr>
+            <th width="3%">ID</th>
+            <th width="5%">Nome</th>
+            <th width="2%">Anno di nascita</th>
+            <th width="5%">Razza</th>
+            <th width="5%">Genere</th>
+            <th width="3%">Data addozione</th>
+            <th width="3%">Data acquisizione</th>
+            <th width="3%">Sterilizzato</th>
+            <th width="3%">Data Sterilizz</th>
+            <th width="5%">Modifica</th>
+            <th width="5%">Cancella</th>
+        </tr>
+        @foreach (Canile singolo in db.canili)
+        {
+            <tr>
+                <th>@singolo.Id_cane</th>
+                <th>@singolo.Nome_cane</th>
+                <th>@singolo.Anno_nascita</th>
+                <th>@singolo.Razza</th>
+                <th>@singolo.Genere</th>
+                <th>@singolo.Data_addozione</th>
+                <th>@singolo.Data_acquisizione</th>
+                <th>@singolo.Sterilizato</th>
+                <th>@singolo.Data_steril</th>
+                <td><button class="oi oi-pencil" @onclick="(e => Modifica(singolo))">Modifica</button></td>
+                <td><button class="oi oi-pencil" @onclick="(e => Cancella(singolo))">Cancella</button></td>
+
+
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <input @bind-value="nuovoCane.Nome_cane" placeholder="Nome del cane" /><br />
+    <input @bind-value="nuovoCane.Anno_nascita"  type="date" /><br />
+    <input @bind-value="nuovoCane.Razza"  placeholder="Razza del cane" /><br />
+    <input @bind-value="nuovoCane.Genere" placeholder="Genere del cane" /><br />
+    <input @bind-value="nuovoCane.Data_addozione" type="date" /><br />
+    <input @bind-value="nuovoCane.Data_acquisizione" type="date" /><br />
+    <input @bind-value="nuovoCane.Sterilizato" placeholder="Sterilizzato" /><br />
+    <input @bind-value="nuovoCane.Data_steril" type="date"  /><br />
+    <button class="btn btn-success" @onclick="(e => Salva())">Salva</button>
+
+
+}
+
+@code {
+    private Canile nuovoCane;
+
+    private void Aggiungi()
+    {
+        nuovoCane = new Canile();
+    }
+    private void Modifica(Canile modCane)
+    {
+        nuovoCane = modCane;
+    }
+    private void Cancella(Canile daCancellare)
+    {
+        db.canili.Remove(daCancellare);
+        db.SaveChanges();
+    }
+    public void Annulla(Canile daAnnullare)
+    {
+        nuovoCane = daAnnullare;
+    }
+    private void Salva()
+    {
+        if (nuovoCane.Id_cane == 0)
+        {
+            db.canili.Add(nuovoCane);
+        }
+        else
+        {
+            db.canili.Update(nuovoCane);
+        }
+        db.SaveChanges();
+        nuovoCane = null;
+    }
+}
