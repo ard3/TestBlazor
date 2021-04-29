@@ -7,32 +7,32 @@
     <button class="btn btn-primary" @onclick="(e => Aggiungi())">Aggiungi cane</button>
     <table class="table table-hover">
         <tr>
-            <th width="3%">ID</th>
-            <th width="5%">Nome</th>
-            <th width="2%">Anno di nascita</th>
-            <th width="5%">Razza</th>
-            <th width="5%">Genere</th>
-            <th width="3%">Data addozione</th>
-            <th width="3%">Data acquisizione</th>
-            <th width="3%">Sterilizzato</th>
-            <th width="3%">Data Sterilizz</th>
-            <th width="5%">Modifica</th>
-            <th width="5%">Cancella</th>
+            <td>ID</td>
+            <td>Nome</td>
+            <td>Anno di nascita</td>
+            <td>Razza</td>
+            <td>Genere</td>
+            <td>Data addozione</td>
+            <td>Data acquisizione</td>
+            <td>Sterilizzato</td>
+            <td>Data Sterilizz</td>
+            <td>Modifica</td>
+            <td>Cancella</td>
         </tr>
         @foreach (Canile singolo in db.canili)
         {
             <tr>
-                <th>@singolo.Id_cane</th>
-                <th>@singolo.Nome_cane</th>
-                <th>@singolo.Anno_nascita</th>
-                <th>@singolo.Razza</th>
-                <th>@singolo.Genere</th>
-                <th>@singolo.Data_addozione</th>
-                <th>@singolo.Data_acquisizione</th>
-                <th>@singolo.Sterilizato</th>
-                <th>@singolo.Data_steril</th>
+                <td>@singolo.Id_cane</td>
+                <td>@singolo.Nome_cane</td>
+                <td>@singolo.Anno_nascita</td>
+                <td>@singolo.Razza</td>
+                <td>@singolo.Genere</td>
+                <td>@singolo.Data_addozione</td>
+                <td>@singolo.Data_acquisizione</td>
+                <td>@singolo.Sterilizzato</td>
+                <td>@singolo.Data_steril</td>
                 <td><button class="oi oi-pencil" @onclick="(e => Modifica(singolo))">Modifica</button></td>
-                <td><button class="oi oi-pencil" @onclick="(e => Cancella(singolo))">Cancella</button></td>
+                <td><button class="oi oi-trash" @onclick="(e => Cancella(singolo))">Cancella</button></td>
 
 
             </tr>
@@ -41,15 +41,41 @@
 }
 else
 {
-    <input @bind-value="nuovoCane.Nome_cane" placeholder="Nome del cane" /><br />
-    <input @bind-value="nuovoCane.Anno_nascita"  type="date" /><br />
-    <input @bind-value="nuovoCane.Razza"  placeholder="Razza del cane" /><br />
-    <input @bind-value="nuovoCane.Genere" placeholder="Genere del cane" /><br />
-    <input @bind-value="nuovoCane.Data_addozione" type="date" /><br />
-    <input @bind-value="nuovoCane.Data_acquisizione" type="date" /><br />
-    <input @bind-value="nuovoCane.Sterilizato" placeholder="Sterilizzato" /><br />
-    <input @bind-value="nuovoCane.Data_steril" type="date"  /><br />
+<label>
+    Nome del cane
+    <input @bind-value="nuovoCane.Nome_cane" placeholder="Nome del cane" />
+</label>
+    <br />
+    <label>Anno di nascita
+        <input @bind-value="nuovoCane.Anno_nascita" type="date" />
+    </label>
+    <br />
+    <label>Razza del cane
+        <input @bind-value="nuovoCane.Razza" placeholder="Razza del cane" />
+    </label>
+    <br />
+    <label>Genere del cane
+        <input @bind-value="nuovoCane.Genere" placeholder="Genere del cane" />
+    </label>
+    <br />
+    <label>Data di addozione
+        <input @bind-value="nuovoCane.Data_addozione" type="date" />
+    </label>
+    <br />
+    <label>Data di acquisizione
+        <input @bind-value="nuovoCane.Data_acquisizione" type="date" />
+    </label>
+    <br />
+    <label>Sterilizzato
+        <input @bind-value="nuovoCane.Sterilizzato" placeholder="Sterilizzato" />
+    </label>
+    <br />
+    <label>Data di sterilizzazione
+        <input @bind-value="nuovoCane.Data_steril" type="date" />
+    </label>
+    <br />
     <button class="btn btn-success" @onclick="(e => Salva())">Salva</button>
+    <button class="btn btn-danger" @onclick="(e => Annulla())">Annulla</button>
 
 
 }
@@ -70,9 +96,9 @@ else
         db.canili.Remove(daCancellare);
         db.SaveChanges();
     }
-    public void Annulla(Canile daAnnullare)
+    public void Annulla()
     {
-        nuovoCane = daAnnullare;
+        nuovoCane = null;
     }
     private void Salva()
     {

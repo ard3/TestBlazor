@@ -30,7 +30,7 @@ namespace secondoEsame.CanileFolder
         public DateTime Data_acquisizione { get; set; }
 
         [Required(ErrorMessage = "Devi scegliere il periodo!")]
-        public bool Sterilizato { get; set; }
+        public bool Sterilizzato { get; set; }
 
         [Required(ErrorMessage = "Devi scegliere il periodo!")]
         public DateTime Data_steril { get; set; }
